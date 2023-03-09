@@ -1,70 +1,139 @@
-# Getting Started with Create React App
+#创建React应用程序入门
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+这个项目是用[Create React App]启动的(https://github.com/facebook/create-react-app).
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+##可用脚本
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+在项目目录中，可以运行：
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+###`npm开始`
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+以开发模式运行应用程序\
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+打开[http://localhost:3000](http://localhost:3000)以在浏览器中查看。
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+当您进行更改时，页面将重新加载\
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+您还可以在控制台中看到任何lint错误。
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+###`npm测试`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+在交互式监视模式下启动测试运行程序\
 
-### Advanced Configuration
+参见[运行测试]一节(https://facebook.github.io/create-react-app/docs/running-tests)了解更多信息。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+###`npm运行生成`
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+将生产应用程序生成到“build”文件夹\
+
+它在生产模式下正确捆绑React，并优化构建以获得最佳性能。
+
+
+
+生成被缩小，文件名包括哈希\
+
+您的应用已准备好部署！
+
+
+
+请参阅有关[部署]的部分(https://facebook.github.io/create-react-app/docs/deployment)了解更多信息。
+
+
+
+###`npm运行弹出`
+
+
+
+**注意：这是一个单向操作。一旦你‘弹出’，你就不能回去了**
+
+
+
+如果您对构建工具和配置选项不满意，可以随时“弹出”。此命令将从项目中删除单个生成依赖项。
+
+
+
+相反，它会将所有配置文件和可传递的依赖项（webpack、Babel、ESLint等）复制到您的项目中，这样您就可以完全控制它们。除“eject”之外的所有命令都仍然有效，但它们将指向复制的脚本，以便您可以调整它们。此时，你只能靠自己了。
+
+
+
+您不必使用“eject”。精心策划的特性集适合于中小型部署，您不应该觉得有义务使用此特性。然而，我们知道，如果您无法在准备好使用时自定义它，那么该工具将不会有用。
+
+
+
+##了解更多信息
+
+
+
+您可以在[Create React App文档]中了解更多信息(https://facebook.github.io/create-react-app/docs/getting-started).
+
+
+
+要了解React，请查看[Rreact文档](https://reactjs.org/).
+
+
+
+###代码拆分
+
+
+
+此部分已移至此处：[https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+
+
+###分析捆绑包大小
+
+
+
+此部分已移至此处：[https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+
+
+###制作渐进式Web应用程序
+
+
+
+此部分已移至此处：[https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+
+
+###高级配置
+
+
+
+此部分已移至此处：[https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+
+
+###部署
+
+
+
+此部分已移至此处：[https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+
+
+###“npm运行生成”无法缩小
+
+
+
+此部分已移至此处：[https://facebook.github.io/create-react-app/docs/troubleshooting#npm-运行生成无法缩小](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-运行生成无法缩小）

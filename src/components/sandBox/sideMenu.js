@@ -1,37 +1,52 @@
 import React from 'react'
 import { Layout, Menu } from 'antd';
 import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  PieChartOutlined,
+  DesktopOutlined,
+  MailOutlined,
 } from '@ant-design/icons';
+import { withRouter } from 'react-router-dom'
 const { Sider } = Layout;
-export default function sideMenu() {
+function sideMenu(props) {
+  // const [collapsed, setCollapsed] = useState(false);
+  function getItem(label, key, icon, children, type) {
+    return {
+      key,
+      icon,
+      children,
+      label,
+      type,
+    };
+  }
+  const items = [
+    getItem('首页', '/home', <PieChartOutlined />),
+    getItem('用户列表', '/user-manage/list', <DesktopOutlined />),
+    getItem('角色列表', '/right-manage/role/list', <DesktopOutlined />),
+    getItem('新闻列表', '/right-manage/right/list', <DesktopOutlined />),
+
+  ];
   return (
     <Sider trigger={null} collapsible >
-      <div className="logo" />
+      <div className="logo" style={{
+        fontSize: '20px', color: 'white', textAlign: 'center', height: '32px',
+        margin: '16px',
+        background: 'rgba(255, 255, 255, 0.3)'
+      }} >管理系统</div>
       <Menu
-        theme="dark"
+        defaultSelectedKeys={['/right-manage/role/list']}
         mode="inline"
-        defaultSelectedKeys={['1']}
-        items={[
-          {
-            key: '1',
-            icon: <UserOutlined />,
-            label: 'nav 1',
-          },
-          {
-            key: '2',
-            icon: <VideoCameraOutlined />,
-            label: 'nav 2',
-          },
-          {
-            key: '3',
-            icon: <UploadOutlined />,
-            label: 'nav 3',
-          },
-        ]}
+        theme="dark"
+        // inlineCollapsed={collapsed}
+        onClick={() => {
+          console.log(props);
+          // items.map((item) => {
+          //   console.log(item.key);
+          //   return item
+          // })
+        }}
+        items={items}
       />
     </Sider>
   )
 }
+export default withRouter(sideMenu)

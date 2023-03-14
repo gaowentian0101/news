@@ -3,7 +3,6 @@ import { Layout, Menu } from 'antd';
 import {
   PieChartOutlined,
   DesktopOutlined,
-  MailOutlined,
 } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
 const { Sider } = Layout;
@@ -20,11 +19,19 @@ function sideMenu(props) {
   }
   const items = [
     getItem('首页', '/home', <PieChartOutlined />),
-    getItem('用户列表', '/user-manage/list', <DesktopOutlined />),
-    getItem('角色列表', '/right-manage/role/list', <DesktopOutlined />),
-    getItem('新闻列表', '/right-manage/right/list', <DesktopOutlined />),
-
+    getItem('用户管理', '/user-manage', <DesktopOutlined />, [
+      getItem('用户列表', '/user-manage/list', <PieChartOutlined />)
+    ]),
+    getItem('权限管理', '/right-manage', <DesktopOutlined />, [
+      getItem('角色列表', '/right-manage/role/list', <PieChartOutlined />),
+      getItem('权限列表', '/right-manage/right/list', <PieChartOutlined />),
+    ]),
   ];
+  const onClick = (item) => {
+    console.log(item);
+    console.log(props);
+    props.history.push(item.key)
+  }
   return (
     <Sider trigger={null} collapsible >
       <div className="logo" style={{
@@ -33,17 +40,11 @@ function sideMenu(props) {
         background: 'rgba(255, 255, 255, 0.3)'
       }} >管理系统</div>
       <Menu
-        defaultSelectedKeys={['/right-manage/role/list']}
+        defaultSelectedKeys={['/home']}
         mode="inline"
         theme="dark"
         // inlineCollapsed={collapsed}
-        onClick={() => {
-          console.log(props);
-          // items.map((item) => {
-          //   console.log(item.key);
-          //   return item
-          // })
-        }}
+        onClick={onClick}
         items={items}
       />
     </Sider>

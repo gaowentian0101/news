@@ -3,6 +3,10 @@ import { Layout, Menu } from 'antd';
 import {
   PieChartOutlined,
   DesktopOutlined,
+  ApartmentOutlined,
+  SmileOutlined,
+  SolutionOutlined,
+  TeamOutlined,
 } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
 const { Sider } = Layout;
@@ -20,11 +24,11 @@ function sideMenu(props) {
   const items = [
     getItem('首页', '/home', <PieChartOutlined />),
     getItem('用户管理', '/user-manage', <DesktopOutlined />, [
-      getItem('用户列表', '/user-manage/list', <PieChartOutlined />)
+      getItem('用户列表', '/user-manage/list', <SmileOutlined/>)
     ]),
-    getItem('权限管理', '/right-manage', <DesktopOutlined />, [
-      getItem('角色列表', '/right-manage/role/list', <PieChartOutlined />),
-      getItem('权限列表', '/right-manage/right/list', <PieChartOutlined />),
+    getItem('权限管理', '/right-manage', <ApartmentOutlined />, [
+      getItem('角色列表', '/right-manage/role/list', <TeamOutlined/>),
+      getItem('权限列表', '/right-manage/right/list', <SolutionOutlined/>),
     ]),
   ];
   const onClick = (item) => {

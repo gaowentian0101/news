@@ -35,18 +35,44 @@ function SideMenu(props) {
   const [menu, setmenu] = useState([])
   useEffect(() => {
     axios.get('http://localhost:2000/rights?_embed=children').then(res => {
+      // 写法1 通过对接口返回的数据进行操作
       const list = res.data
-      console.log(iconList);
       list.map(item => {
-        console.log(item.key);
-        item.icon = <DeleteOutlined />
-        // item.icon = item.key == key ? item.icon == iconList[key] : ''
-        item.children = item.children.filter(ele => ele.pagepermisson === 1)
+        item.icon = iconList[item.key]
+        // 子节点只有pagepermisson === 1时显示在菜单上 其他均为按钮级别权限
+        item.children = item.children && item.children.length > 0 ? item.children.filter(ele => ele.pagepermisson === 1) : ''
+        // 显示子节点icon
+        item.children = item.children && item.children.length > 0 ? item.children.map(item => { item.icon = iconList[item.key]; return item }) : ''
         return item
       })
-      setmenu(list)
+      setmenu(res.data)
     })
   }, [])
+  // 写法2 根据antd4组件的写法对菜单需要的数据进行封装
+  // function getItem(label, key, icon, children, type) {
+  //   return {
+  //     key,
+  //     icon,
+  //     children,
+  //     label,
+  //     type,
+  //   }
+  // }
+  // function getMenuList(menuList) {
+  //   return menuList.map((item) => {
+  //     //如果pagepermisson===1，并且当前用户的中有当前key（即路径）
+  //     if (item.pagepermisson === 1) {
+  //       return getItem(
+  //         item.label,
+  //         item.key,
+  //         iconList[item.key],
+  //         // item.children && item.children.length > 0 ? getMenuList(item.children) : ''
+  //         item.children && item.children.length > 0 ? item.children.filter(ele => ele.pagepermisson === 1) : ''
+  //       )
+  //     }
+  //     return item
+  //   })
+  // }
   const onClick = (item) => {
     props.history.push(item.key)
   }
@@ -63,7 +89,8 @@ function SideMenu(props) {
         theme="dark"
         // inlineCollapsed={collapsed}
         onClick={onClick}
-        items={menu}
+        items={menu} //写法1
+      // items={getMenuList(menu)} 写法2
       />
     </Sider>
   )

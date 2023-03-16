@@ -1,39 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Layout, Menu } from 'antd';
 import {
-  PieChartOutlined,
-  DesktopOutlined,
-  ApartmentOutlined,
-  SmileOutlined,
-  SolutionOutlined,
-  TeamOutlined,
+  HomeOutlined, UserOutlined, UnorderedListOutlined,
+  LockOutlined, TeamOutlined, SolutionOutlined,
+  ReadOutlined, FormOutlined, DeleteOutlined,
+  PieChartOutlined, ContainerOutlined, CheckSquareOutlined,
+  OrderedListOutlined, FolderAddOutlined, InteractionOutlined,
+  UploadOutlined, VerticalAlignBottomOutlined
 } from '@ant-design/icons';
+import axios from 'axios';
 import { withRouter } from 'react-router-dom'
 const { Sider } = Layout;
-function sideMenu(props) {
-  // const [collapsed, setCollapsed] = useState(false);
-  function getItem(label, key, icon, children, type) {
-    return {
-      key,
-      icon,
-      children,
-      label,
-      type,
-    };
-  }
-  const items = [
-    getItem('首页', '/home', <PieChartOutlined />),
-    getItem('用户管理', '/user-manage', <DesktopOutlined />, [
-      getItem('用户列表', '/user-manage/list', <SmileOutlined/>)
-    ]),
-    getItem('权限管理', '/right-manage', <ApartmentOutlined />, [
-      getItem('角色列表', '/right-manage/role/list', <TeamOutlined/>),
-      getItem('权限列表', '/right-manage/right/list', <SolutionOutlined/>),
-    ]),
-  ];
+const iconList = {
+  '/home': <HomeOutlined />,
+  '/user-manage': <UserOutlined />,
+  '/user-manage/list': <UnorderedListOutlined />,
+  '/right-manage': <LockOutlined />,
+  '/right-manage/role/list': <TeamOutlined />,
+  '/right-manage/right/list': <SolutionOutlined />,
+  '/news-manage': <ReadOutlined />,
+  '/news-manage/add': <FormOutlined />,
+  '/news-manage/draft': <DeleteOutlined />,
+  '/news-manage/category': <PieChartOutlined />,
+  '/audit-manage': <ContainerOutlined />,
+  '/audit-manage/audit': <CheckSquareOutlined />,
+  '/audit-manage/list': <OrderedListOutlined />,
+  '/publish-manage': <FolderAddOutlined />,
+  '/publish-manage/unpublished': <InteractionOutlined />,
+  '/publish-manage/published': <UploadOutlined />,
+  '/publish-manage/sunset': <VerticalAlignBottomOutlined />
+}
+
+function SideMenu(props) {
+  const [menu, setmenu] = useState([])
+  useEffect(() => {
+    axios.get('http://localhost:2000/rights?_embed=children').then(res => {
+      const list = res.data
+      console.log(iconList);
+      list.map(item => {
+        console.log(item.key);
+        item.icon = <DeleteOutlined />
+        // item.icon = item.key == key ? item.icon == iconList[key] : ''
+        item.children = item.children.filter(ele => ele.pagepermisson === 1)
+        return item
+      })
+      setmenu(list)
+    })
+  }, [])
   const onClick = (item) => {
-    console.log(item);
-    console.log(props);
     props.history.push(item.key)
   }
   return (
@@ -42,16 +56,16 @@ function sideMenu(props) {
         fontSize: '20px', color: 'white', textAlign: 'center', height: '32px',
         margin: '16px',
         background: 'rgba(255, 255, 255, 0.3)'
-      }} >管理系统</div>
+      }} >新闻管理系统</div>
       <Menu
         defaultSelectedKeys={['/home']}
         mode="inline"
         theme="dark"
         // inlineCollapsed={collapsed}
         onClick={onClick}
-        items={items}
+        items={menu}
       />
     </Sider>
   )
 }
-export default withRouter(sideMenu)
+export default withRouter(SideMenu)

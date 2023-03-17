@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Space, Table, Tag } from 'antd';
+import { Button, Space, Table, Tag, message, Popconfirm } from 'antd';
 import {
   DeleteOutlined, EditOutlined
 } from '@ant-design/icons';
@@ -8,7 +8,7 @@ export default function RightList() {
   const [data, setdata] = useState([])
   useEffect(() => {
     axios.get('http://localhost:2000/rights?_embed=children').then(res => {
-      console.log(res.data);
+      res.data[0].children = ''
       setdata(res.data)
     })
   }, [])
@@ -32,8 +32,8 @@ export default function RightList() {
       title: '操作',
       render(row) {
         return <Space >
-          <Button type="primary" danger shape="round" ghost icon={<DeleteOutlined />} onClick={handleDelelt(row)} />
-          <Button type="primary" shape="round" ghost icon={<EditOutlined />} onClick={handleEdit(row)} />
+          <Button type="primary" danger shape="round" ghost icon={<DeleteOutlined />} onClick={() => handleDelelt(row)} />
+          <Button type="primary" shape="round" ghost icon={<EditOutlined />} onClick={() => handleEdit(row)} />
         </Space>
       }
     }
@@ -45,6 +45,9 @@ export default function RightList() {
     console.log("编辑", row);
   }
   return (
-    <Table columns={columns} dataSource={data} pagination  />
+    <div>
+      <Table columns={columns} dataSource={data} pagination />
+    </div>
+
   )
 }

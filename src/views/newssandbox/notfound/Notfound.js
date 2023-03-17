@@ -1,7 +1,8 @@
 import React from 'react'
+import { Empty } from 'antd';
 
 export default function Notfound() {
   return (
-    <div>403Notfound</div>
+    <div><Empty /></div>
   )
 }

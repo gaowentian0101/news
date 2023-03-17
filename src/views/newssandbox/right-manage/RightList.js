@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Space, Table, Tag, message, Popconfirm } from 'antd';
+import { Button, Space, Table, Tag, Modal, message } from 'antd';
 import {
-  DeleteOutlined, EditOutlined
+  DeleteOutlined, EditOutlined, ExclamationCircleOutlined
 } from '@ant-design/icons';
 import axios from 'axios';
+const { confirm } = Modal;
 export default function RightList() {
   const [data, setdata] = useState([])
   useEffect(() => {
@@ -39,7 +40,19 @@ export default function RightList() {
     }
   ];
   const handleDelelt = (row) => {
-    console.log("删除", row);
+    confirm({
+      title: '是否删除当前数据?',
+      icon: <ExclamationCircleOutlined />,
+      okText: '确认',
+      cancelText: '取消',
+      onOk() {
+        
+        message.success('删除成功');
+      },
+      onCancel() {
+        message.error('取消删除');
+      },
+    });
   }
   const handleEdit = (row) => {
     console.log("编辑", row);

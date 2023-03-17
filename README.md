@@ -7,7 +7,9 @@
 ##运行项目 1.npm i 2.npm start
 
 ##后端接口是通过jsonserver模拟出来的
+
 ###1：全局安装jsonserver  cnpm install -g json-server
+
 ###2:运行json文件并监听   json-server --watch .\db.json --port 2000
 
 ##了解更多信息

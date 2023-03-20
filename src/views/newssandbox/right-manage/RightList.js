@@ -54,9 +54,8 @@ export default function RightList() {
             <Switch
               checkedChildren="开启"
               unCheckedChildren="关闭"
-              checked={row.pagepermisson === 1}
+              checked={row.pagepermisson}
               onChange={() => handleChange(row)}
-              disabled={row.pagepermisson !== 1}
             />
           </Space>
         )
@@ -90,7 +89,6 @@ export default function RightList() {
   const handleChange = (row) => {
     row.pagepermisson = row.pagepermisson === 1 ? 0 : 1
     setdata([...data])
-    console.log('编辑', row.pagepermisson)
     if (row.grade === 1) {
       // 修改父节点的数据
       axios.patch(`http://localhost:2000/rights/${row.id}`).then((res) => {
@@ -103,7 +101,6 @@ export default function RightList() {
         res.data.pagepermisson = row.pagepermisson
       })
     }
-    dataList()
   }
   return (
     <div>

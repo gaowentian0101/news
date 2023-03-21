@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Layout, Menu } from 'antd';
 import {
   HomeOutlined, UserOutlined, UnorderedListOutlined,
@@ -33,50 +33,27 @@ const iconList = {
 
 function SideMenu(props) {
   const [menu, setmenu] = useState([])
-  // 写法1 通过对接口返回的数据进行操作
-  //tips:此处不需要递归,满足antd组件meun格式,会自动往下找children节点属性
-  function List(list) {
-    return list.map((item) => {
-      item.icon = iconList[item.key]
-      // 子节点只有pagepermisson === 1时显示在菜单上 其他均为按钮级别权限
-      item.children = item.children && item.children.length > 0 ? item.children.filter(ele => ele.pagepermisson === 1) : ''
-      // 显示子节点icon
-      item.children = item.children && item.children.length > 0 ? item.children.map(item => { item.icon = iconList[item.key]; return item }) : ''
-      return item
-    })
-  }
+  // 递归处理菜单树
+  const filterMenuTree = useCallback(menuTree => {
+    return menuTree.map(item => {
+      if (item.pagepermisson === 1) {
+        item.icon = iconList[item.key]
+        if (item.children && item.children.length > 0) {
+          item.children = filterMenuTree(item.children)
+        } else {
+          item.children = ''
+        }
+        return item
+      }
+      return null
+    }).filter(item => item != null)
+  }, [])
   useEffect(() => {
     axios.get('http://localhost:2000/rights?_embed=children').then(res => {
-      List(res.data)
-      setmenu(res.data)
+      const newList = filterMenuTree(res.data) // 递归处理菜单树
+      setmenu(newList)
     })
-  }, [])
-
-  // 写法2 根据antd4组件的写法对菜单需要的数据进行封装
-  // function getItem(label, key, icon, children, type) {
-  //   return {
-  //     key,
-  //     icon,
-  //     children,
-  //     label,
-  //     type,
-  //   }
-  // }
-  // function getMenuList(menuList) {
-  //   return menuList.map((item) => {
-  //     //如果pagepermisson===1，并且当前用户的中有当前key（即路径）
-  //     if (item.pagepermisson === 1) {
-  //       return getItem(
-  //         item.label,
-  //         item.key,
-  //         iconList[item.key],
-  //         // item.children && item.children.length > 0 ? getMenuList(item.children) : ''
-  //         item.children && item.children.length > 0 ? item.children.filter(ele => ele.pagepermisson === 1) : ''
-  //       )
-  //     }
-  //     return item
-  //   })
-  // }
+  }, [filterMenuTree])
   const onClick = (item) => {
     props.history.push(item.key)
   }
@@ -97,8 +74,7 @@ function SideMenu(props) {
             theme="dark"
             // inlineCollapsed={collapsed}
             onClick={onClick}
-            items={menu} //写法1
-          // items={getMenuList(menu)} 写法2
+            items={menu} 
           />
         </div>
       </div>

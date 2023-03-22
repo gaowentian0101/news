@@ -57,7 +57,6 @@ function SideMenu(props) {
   const onClick = (item) => {
     props.history.push(item.key)
   }
-  console.log('/' + props.location.pathname.split('/')[1]);
   return (
     <Sider trigger={null} collapsible >
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>

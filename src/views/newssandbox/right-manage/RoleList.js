@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Space, Table, Modal, message, Tree } from 'antd'
-import { DeleteOutlined, ExclamationCircleOutlined, UnorderedListOutlined } from '@ant-design/icons'
+import {
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons'
 import axios from 'axios'
 const { confirm } = Modal
 export default function RoleList() {
   const [data, setdata] = useState([])
+  const [Treedata, setTreedata] = useState([])
   const [roleData, setRoledata] = useState([])
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rowId, setRowId] = useState(0)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   //获取角色列表
   function dataList() {
     axios.get('http://localhost:2000/roles').then((res) => {
@@ -15,7 +21,7 @@ export default function RoleList() {
   }
   // 权限列表
   function roleList(list) {
-    return list.map(item => {
+    return list.map((item) => {
       if (item.label) {
         item.title = item.label
         if (item.children && item.children.length > 0) {
@@ -31,7 +37,6 @@ export default function RoleList() {
     axios.get('http://localhost:2000/rights?_embed=children').then((res) => {
       const rolelist = roleList(res.data)
       setRoledata(rolelist)
-      console.log(rolelist);
     })
   }
   useEffect(() => {
@@ -67,7 +72,6 @@ export default function RoleList() {
               icon={<UnorderedListOutlined />}
               onClick={() => handleDeatil(row)}
             />
-
           </Space>
         )
       },
@@ -82,7 +86,7 @@ export default function RoleList() {
       cancelText: '取消',
       onOk() {
         // 删除节点的数据
-        axios.delete(`http://localhost:2000/roles/${row.id}`).then(res => {
+        axios.delete(`http://localhost:2000/roles/${row.id}`).then((res) => {
           dataList()
           message.success('删除成功')
         })
@@ -94,25 +98,57 @@ export default function RoleList() {
   }
   // 弹窗详情
   const handleDeatil = (row) => {
-    console.log(row);
-    setIsModalOpen(true);
+    console.log(row)
+    setTreedata(row.rights)
+    setRowId(row.id)
+    setIsModalOpen(true)
   }
+  // 弹窗确认
   const handleOk = () => {
-    setIsModalOpen(false);
-  };
+    setIsModalOpen(false)
+    setdata(
+      data.map((item) => {
+        if (item.id === rowId) {
+          return {
+            ...item,
+            rights: Treedata.checked,
+          }
+        }
+        return item
+      })
+    )
+    axios.patch(`http://localhost:2000/roles/${rowId}`, {
+      rights: Treedata.checked,
+    })
+  }
+  // 弹窗取消
   const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+    setIsModalOpen(false)
+  }
+  // 点击tree中的节点
+  const onCheck = (checkedKeys, info) => {
+    console.log('onCheck', checkedKeys, info)
+    setTreedata(checkedKeys)
+  }
   return (
     <div>
       {/* 表格 */}
       <Table columns={columns} dataSource={data} pagination />
       {/* 弹窗详情 */}
-      <Modal title="权限分配" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText="确认"
-        cancelText="取消">
+      <Modal
+        title="权限分配"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="确认"
+        cancelText="取消"
+      >
         <Tree
           checkable
           treeData={roleData}
+          checkedKeys={Treedata}
+          onCheck={onCheck}
+          checkStrictly
         />
       </Modal>
     </div>
